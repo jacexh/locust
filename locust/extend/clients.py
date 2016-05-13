@@ -13,7 +13,8 @@ from requests.exceptions import RequestException
 class JsonRpcSession(HttpSession):
 
     def request(self, method, url, name=None, catch_response=False, **kwargs):
-        """
+        """Constructs and sends a :py:class:`requests.Request`.
+        Returns :py:class:`requests.Response` object.
 
         :param method:
         :param url:
@@ -61,13 +62,13 @@ class JsonRpcSession(HttpSession):
                     exception=e,
                 )
             else:
-                to_dict = response.json()
-                if to_dict.get('error', None):
+                to_json = response.json()
+                if to_json.get('error', None):
                     events.request_failure.fire(
                         request_type=request_meta['method'],
                         name=request_meta['name'],
                         response_time=request_meta['response_time'],
-                        exception=to_dict['error'].get('message', 'unknown error')
+                        exception=to_json['error'].get('message', 'unknown error')
                     )
                 else:
                     events.request_success.fire(
