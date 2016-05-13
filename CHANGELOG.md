@@ -1,0 +1,1 @@
+- [x] support for JSON-RPC
