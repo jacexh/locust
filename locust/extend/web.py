@@ -56,7 +56,7 @@ def report_html():
       <embed type="image/svg+xml" src="/chart/distribution.svg" height="600"/>
     </figure>
     <figure>
-        <embed type="image/svg+xml" src="/chart/statistics.svg" height="400"/>
+        <embed type="image/svg+xml" src="/chart/statistics.svg" height="600"/>
         </figure>
 </div>
   </body>
