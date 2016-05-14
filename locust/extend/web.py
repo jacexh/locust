@@ -24,8 +24,6 @@ def rps_svg():
                             s.get_response_time_percentile(.98),
                             s.get_response_time_percentile(.99),
                             s.max_response_time])
-        else:
-            line_chart.add(s.name, [None, None, None, None, None, None, None, None, None])
     return line_chart.render_response()
 
 
