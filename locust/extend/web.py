@@ -40,7 +40,7 @@ def statistics_svg():
                 s.min_response_time or 0,
                 s.max_response_time
             ])
-    return chain.render_response()
+    return chart.render_response()
 
 
 @app.route("/report.html")
