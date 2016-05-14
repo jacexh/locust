@@ -15,11 +15,11 @@ def rps_svg():
     for s in chain(_sort_stats(runners.locust_runner.request_stats),
                    [runners.locust_runner.stats.aggregated_stats("Total", full_request_history=True)]):
         if s.num_requests:
-            data = s.percentile(tpl='%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s')
+            data = s.percentile(tpl='%s\t%s\t%i\t%i\t%i\t%i\t%i\t%i\t%i\t%i\t%i')
             formatted = data.split("\t")
             line_chart.add(s.name, formatted[2:])
         else:
-            line_chart.add(s.name, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+            line_chart.add(s.name, [None, None, None, None, None, None, None, None, None])
     return line_chart.render_response()
 
 
