@@ -11,9 +11,9 @@ from StringIO import StringIO
 from gevent import wsgi
 from flask import Flask, make_response, request, render_template
 
-from . import runners
-from .cache import memoize
-from .runners import MasterLocustRunner
+from locust import runners
+from locust.cache import memoize
+from locust.runners import MasterLocustRunner
 from locust.stats import median_from_dict
 from locust import version
 
