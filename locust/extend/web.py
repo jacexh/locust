@@ -15,9 +15,16 @@ def rps_svg():
     for s in chain(_sort_stats(runners.locust_runner.request_stats),
                    [runners.locust_runner.stats.aggregated_stats("Total", full_request_history=True)]):
         if s.num_requests:
-            data = s.percentile(tpl='%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d')
-            formatted = data.split("\t")
-            line_chart.add(s.name, formatted[2:])
+            line_chart.add(s.name,
+                           [s.get_response_time_percentile(0.5),
+                            s.get_response_time_percentile(.66),
+                            s.get_response_time_percentile(.75),
+                            s.get_response_time_percentile(.8),
+                            s.get_response_time_percentile(.9),
+                            s.get_response_time_percentile(.95),
+                            s.get_response_time_percentile(.98),
+                            s.get_response_time_percentile(.99),
+                            s.max_response_time])
         else:
             line_chart.add(s.name, [None, None, None, None, None, None, None, None, None])
     return line_chart.render_response()
