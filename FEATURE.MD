@@ -1,0 +1,6 @@
+- [x] 新增JsonRpcLocust,已经能够支持JSON-RPC协议
+- [x] locust进程被终端时,控制台能够输出总的RPS,而不再是最后20秒的RPS
+- [x] 新增一个测试报告页面`/report.html`
+- [ ] 支持response的元数据存入InfluxDB
+- [ ] 支持response的元数据存入Redis
+- [ ] 支持response的元数据存入RabbitMQ
