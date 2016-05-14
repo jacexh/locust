@@ -501,3 +501,35 @@ def stats_printer():
     while True:
         print_stats(locust_runner.request_stats)
         gevent.sleep(2)
+
+
+def print_total_stats(stats):
+    console_logger.info(
+        (" %-" + str(STATS_NAME_WIDTH) + "s %7s %12s %7s %7s %7s  | %7s %7s") %
+        ('Name', '# reqs', '# fails', 'Avg', 'Min', 'Max', 'Median', 'req/s'))
+    console_logger.info("-" * (80 + STATS_NAME_WIDTH))
+    current_rps = 0
+    total_rps = 0
+    total_reqs = 0
+    total_failures = 0
+    for key in sorted(stats.iterkeys()):
+        r = stats[key]
+        current_rps += r.current_rps
+        total_rps += r.total_rps
+        total_reqs += r.num_requests
+        total_failures += r.num_failures
+        console_logger.info(r)
+    console_logger.info("-" * (80 + STATS_NAME_WIDTH))
+
+    try:
+        fail_percent = (total_failures/float(total_reqs))*100
+    except ZeroDivisionError:
+        fail_percent = 0
+
+    console_logger.info(
+        (" %-" + str(STATS_NAME_WIDTH) + "s %7d %12s %42.2f") % ('Current', total_reqs, "%d(%.2f%%)" %
+                                                                 (total_failures, fail_percent), current_rps))
+    console_logger.info(
+        (" %-" + str(STATS_NAME_WIDTH) + "s %7d %12s %42.2f") % ('Total', total_reqs, "%d(%.2f%%)" %
+                                                                 (total_failures, fail_percent), total_rps))
+    console_logger.info("")
