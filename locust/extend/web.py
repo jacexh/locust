@@ -12,8 +12,7 @@ def rps_svg():
     line_chart = pygal.Bar()
     line_chart.x_labels = ["50%", "66%", "75%", "80%", "90%", "95%", "98%", "99%", "100%"]
 
-    for s in chain(_sort_stats(runners.locust_runner.request_stats),
-                   [runners.locust_runner.stats.aggregated_stats("Total", full_request_history=True)]):
+    for s in _sort_stats(runners.locust_runner.request_stats):
         if s.num_requests:
             line_chart.add(s.name,
                            [s.get_response_time_percentile(0.5),
@@ -32,7 +31,7 @@ def rps_svg():
 
 @app.route("/report.html")
 def report_html():
-    return """"<!DOCTYPE html>
+    return """<!DOCTYPE html>
 <html>
   <head>
     <!-- ... -->
@@ -42,5 +41,5 @@ def report_html():
       <embed type="image/svg+xml" src="/chart/distribution.svg" />
     </figure>
   </body>
-</html>"""
-
+</html>
+"""
