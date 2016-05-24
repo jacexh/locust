@@ -43,7 +43,7 @@ class _Config(object):
         Globals.rabbit_channel = None
 
     @staticmethod
-    def enable_report_to_influx(dsn=None, **kwargs):
+    def enable_report_to_influx(create_db=False, dsn=None, **kwargs):
         import influxdb
 
         if Globals.influx_client is None:
@@ -53,6 +53,8 @@ class _Config(object):
                 Globals.influx_client = influxdb.InfluxDBClient(**kwargs)
             else:
                 raise ValueError("InfluxDB connection parameters needed")
+            if create_db:
+                Globals.influx_client.create_database(Globals.influx_client._database)
 
             ori_events.request_success += report_to_influx
 
