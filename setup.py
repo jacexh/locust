@@ -1,9 +1,15 @@
 # encoding: utf-8
 
 from setuptools import setup, find_packages, Command
-import sys, os
+import sys, os, re, ast
 
-version = '0.7.3'
+
+# parse version from locust/__init__.py
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+_init_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), "locust", "__init__.py")
+with open(_init_file, 'rb') as f:
+    version = str(ast.literal_eval(_version_re.search(
+        f.read().decode('utf-8')).group(1)))
 
 
 class Unit2Discover(Command):
@@ -47,7 +53,7 @@ setup(
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     include_package_data=True,
     zip_safe=False,
-    install_requires=["gevent>=1.0.1", "flask>=0.10.1", "requests>=2.9.1", "msgpack-python>=0.4.2"],
+    install_requires=["gevent==1.1.1", "flask>=0.10.1", "requests>=2.9.1", "msgpack-python>=0.4.2"],
     tests_require=['unittest2', 'mock', 'pyzmq'],
     entry_points={
         'console_scripts': [
